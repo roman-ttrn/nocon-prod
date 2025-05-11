@@ -1,0 +1,30 @@
+{% extends "user/base.html" %}
+{% load static %}
+
+{% block content %}
+<body class="login-body">
+  <div class="login-container">
+    <img src="{% static 'user/images/logo.png' %}" alt="NoCon Logo" class="login-logo">
+    <h1 class="login-title">Welcome</h1>
+
+    <form method="POST" class="login-form">
+      {% csrf_token %}
+
+      <input type="email" name="email" placeholder="email" required>
+      <input type="text" name="first_name" placeholder="Name" required>
+      <input type="text" name="last_name" placeholder="Last name" required>
+      <input type="text" name="username" placeholder="username" required>
+      <input type="password" name="password" placeholder="password" required>
+
+      <button type="submit" class="btn-start"><span>Log in</span></button>
+
+    </form>
+    {% if messages %}
+        {% for message in messages %}
+          <p class="message {{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+      {% endif %}
+  </div>
+
+</body>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "user/base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="confirm-wrapper">
+  <form method="post" class="confirm-form">
+    {% csrf_token %}
+    <img src="{% static 'nocon/images/logo.png' %}" alt="NoCon Logo" class="logo-small">
+    
+    <h2 class="form-title">Email confirmation</h2>
+    <p class="form-subtitle">Enter the code. We sent it to your email.</p>
+
+    {% if messages %}
+      {% for message in messages %}
+        <p class="form-message {{ message.tags }}">{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+
+    <input type="text" name="code" placeholder="Verification code" maxlength="12" required class="input-code">
+
+    <button type="submit" class="btn-confirm"><span>Confirm</span></button>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "nocon/base.html" %}
+{% load static %}
+
+{% block content %}
+    <body>
+    <header class="hero">
+        <img src="{% static "nocon/images/logo.png" %}" alt="NoCon Logo" class="logo" />
+        <h1 class="main-title">NoCon</h1>
+        <a href="/user/login_user/" class="btn-start">Start</a>
+    </header>
+
+    <section class="section about fade-in">
+        <h2>What is NoCon?</h2>
+        <p>
+        NoCon — private ecosystem. You must already have your <span class="highlight">username, password, name, last name</span> confirmed to access the platform.
+        </p>
+    </section>
+
+    <section class="section author fade-in">
+        <h2>Author</h2>
+        <p>Created by <span class="highlight">Tatarin Roman</span>.</p>
+    </section>
+
+    <footer class="footer">
+        <p>© 2025 NoCon. All rights reserved.</p>
+    </footer>
+    </body>
+{% endblock content %}
+
+{% block scripts %}
+  <script>
+    const faders = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    faders.forEach(el => observer.observe(el));
+  </script>
+{% endblock scripts %}

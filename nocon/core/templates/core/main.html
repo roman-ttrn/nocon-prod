@@ -1,0 +1,67 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'core/css/post.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+    </style>
+
+    <div class="main-container">
+    <!-- Левая колонка: Посты -->
+    <div class="left-column">
+        {% for post in posts %}
+        <div class="post-card">
+            {% if request.user == post.author %}
+                <form method="post" action="{% url 'delete_post' post.id %}" class="delete-form">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-button">Удалить</button>
+                </form>
+            {% endif %}
+        <p class="post-text">{{ post.content }}</p>
+        {% if post.image %}
+        <img src="{{ post.image.url }}" class="post-image">
+        {% endif %}
+        <div class="post-footer">
+            <span class="post-author"><b>@{{ post.author.username }}</b></span>
+            <span class="post-date">{{ post.created_at|date:"d M Y H:i" }}</span>
+        </div>
+        <button class="like-button" data-post-id="{{ post.id }}">
+            ❤️ {{ post.total_likes }}
+        </button>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Правая колонка: Создание поста -->
+    <div class="right-column">
+        <form method="post" enctype="multipart/form-data" class="create-post-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="submit-button">Post</button>
+        </form>
+    </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        document.querySelectorAll('.like-button').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const postId = this.dataset.postId;
+            fetch(`/like/${postId}/`, {
+            method: 'POST',
+            headers: { 'X-CSRFToken': '{{ csrf_token }}' }
+            })
+            .then(response => response.json())
+            .then(data => {
+            this.innerHTML = `❤️ ${data.likes}`;
+            });
+        });
+        });
+    </script>
+{% endblock %}

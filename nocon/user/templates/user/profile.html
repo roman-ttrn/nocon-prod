@@ -1,0 +1,18 @@
+{% extends "user/base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="profile-page">
+    <div class="profile-card">
+      <a href="{% url 'main' %}" class="go-home-button">← На главную</a>
+      <img src="{{ profile.get_avatar_url }}" alt="Avatar" class="avatar">
+      <div class="info">
+        <h1>{{ profile.user.first_name }} {{ profile.user.last_name }}</h1>
+        <p class="username">@{{ profile.user.username }}</p>
+        <p class="status">{{ profile.status }}</p>
+        <p class="points">{{ profile.contributor_points }} очков</p>
+        <a href="{% url 'edit_profile' %}" class="edit-btn">Редактировать профиль</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
