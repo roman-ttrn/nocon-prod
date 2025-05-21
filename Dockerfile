@@ -7,7 +7,7 @@ FROM python:3.11.8-slim AS banana
 WORKDIR /app
 
 # Устанавливаем системные библиотеки, необходимые для компиляции зависимостей и работы с изображениями
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     # Компилятор для C/C++ — нужен для сборки некоторых Python-зависимостей
     libpq-dev \
