@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     # Для Pillow
     libwebp-dev \         
     # Для Pillow (WebP)
-    netcat \              
+    netcat-openbsd \              
     # Для healthcheck или ожидания других сервисов
     curl \                
     # Можно использовать для отладки
