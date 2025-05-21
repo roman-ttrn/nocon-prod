@@ -1,0 +1,116 @@
+body {
+    margin: 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    background-color: #0f0f0f;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.chat-container {
+    width: 100%;
+    max-width: 600px;
+    background-color: #161616;
+    border: 1px solid #ff0033;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 0 12px rgba(255, 0, 51, 0.2);
+}
+
+.room-title {
+    margin-bottom: 16px;
+    font-size: 24px;
+    color: #ff0033;
+    text-align: center;
+}
+
+.chat-log {
+    height: 400px;
+    overflow-y: auto;
+    background-color: #1c1c1c;
+    border: 1px solid #333;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 16px;
+}
+
+/* остальной CSS как раньше */
+
+.chat-message {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    background-color: #2a2a2a;
+    border-left: 4px solid #ff0033;
+    border-radius: 4px;
+    word-wrap: break-word;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Анимация появления */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Используется для уже загруженных сообщений */
+.fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Автоскролл */
+.chat-log {
+    height: 400px;
+    overflow-y: auto;
+    background-color: #1c1c1c;
+    border: 1px solid #333;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+
+.chat-input-container {
+    display: flex;
+    gap: 8px;
+}
+
+.chat-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #444;
+    background-color: #0f0f0f;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.chat-input:focus {
+    outline: none;
+    border-color: #ff0033;
+}
+
+.chat-button {
+    padding: 10px 16px;
+    background-color: #ff0033;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.chat-button:hover {
+    background-color: #e60029;
+}

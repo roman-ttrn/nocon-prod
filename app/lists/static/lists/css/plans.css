@@ -1,0 +1,121 @@
+:root {
+  --red: #e63946;
+  --gray: #444;
+  --white: #fff;
+  --black: #0f0f0f;
+  --bg-gradient: linear-gradient(135deg, #303030, #a87d7d);
+}
+
+body {
+  margin: 0;
+  padding: 40px 20px;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-gradient);
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.plans-container {
+  width: 100%;
+  max-width: 700px;
+  background: linear-gradient(135deg, #2b2a2a, #381f1f);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+}
+
+.plans-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.plans-title {
+  font-size: 28px;
+  color: var(--red);
+  letter-spacing: 0.6px;
+  margin: 0;
+}
+
+.plans-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-button,
+.add-button {
+  padding: 10px 18px;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--white);
+  background: linear-gradient(135deg, #d00000, #ff4d4d);
+  border: none;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.nav-button:hover,
+.add-button:hover {
+  background: linear-gradient(135deg, #ff1a1a, #ff6666);
+  transform: translateY(-2px);
+}
+
+.plans-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.plan-item {
+  background: linear-gradient(135deg, #3b3b3b, #292929);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  gap: 16px;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.plan-item:hover {
+  transform: scale(1.015);
+  box-shadow: 0 0 25px rgba(255, 0, 0, 0.1);
+}
+
+.plan-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.plan-content {
+  flex: 1;
+}
+
+.plan-name {
+  font-size: 20px;
+  margin: 0 0 8px;
+  color: var(--red);
+}
+
+.plan-description {
+  margin: 0;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.no-plans-text {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+}

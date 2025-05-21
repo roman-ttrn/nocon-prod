@@ -1,0 +1,147 @@
+{% extends "chat/base.html" %}
+{% load static %}
+
+{% block content %}
+    <a href="{% url 'chat_list' %}" class="back-button">← К чатам</a>
+
+    <div class="chat-container">
+        <h1 class="room-title">{{ room.name }}</h1>
+
+        <div id="chat-log" class="chat-log">
+            {% for msg in msgs %}
+                <div class="chat-message {% if msg.sender == request.user %}from-user{% else %}from-friend{% endif %}">
+                    <div class="chat-meta">
+                        <span class="chat-author"><b>{{ msg.sender.username }}</b></span>
+                        <span class="chat-timestamp">{{ msg.timestamp|date:"d E H:i" }}</span>
+                    </div>
+
+                    <div class="chat-content">{{ msg.content }}</div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="chat-input-container">
+            <input id="chat-message-input" type="text" placeholder="Type your message..." class="chat-input">
+            <button id="chat-message-submit" class="chat-button">Send</button>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+        const roomID = "{{ room.id }}";
+        const username = "{{ request.user.username }}";
+
+        const chatLog = document.querySelector('#chat-log');
+
+        function scrollToBottom() {
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+
+        function createMessageElement({ username: sender, message }) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chat-message fade-in ' + (sender === username ? 'from-user' : 'from-friend');
+
+            const metaDiv = document.createElement('div');
+            metaDiv.className = 'chat-meta';
+
+            const authorSpan = document.createElement('span');
+            authorSpan.className = 'chat-author';
+            authorSpan.textContent = sender;
+
+            const timestampSpan = document.createElement('span');
+            timestampSpan.className = 'chat-timestamp';
+            timestampSpan.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            metaDiv.appendChild(authorSpan);
+            metaDiv.appendChild(timestampSpan);
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'chat-content';
+            contentDiv.textContent = message;
+
+            messageDiv.appendChild(metaDiv);
+            messageDiv.appendChild(contentDiv);
+
+            return messageDiv;
+        }
+
+        function addMessage(data) {
+            const messageElement = createMessageElement(data);
+            chatLog.appendChild(messageElement);
+
+            scrollToBottom();
+        }
+
+        const chatSocket = new WebSocket('ws://' + window.location.host + '/ws/chat/' + roomID + '/');
+
+        chatSocket.onmessage = function (e) {
+            try {
+                const data = JSON.parse(e.data);
+                if (data.message && data.username) {
+                    addMessage(data);
+                }
+            } catch (err) {
+                console.error("Invalid message data:", err);
+            }
+        };
+
+        chatSocket.onclose = function (e) {
+            console.error('WebSocket closed unexpectedly');
+        };
+
+        // Обработчик отправки сообщения с проверкой
+        document.querySelector('#chat-message-submit').onclick = function (e) {
+            const input = document.querySelector('#chat-message-input');
+            const message = input.value.trim();
+            if (message !== '') {
+                try {
+                    chatSocket.send(JSON.stringify({ 'message': message }));
+                    input.value = '';
+                } catch (err) {
+                    console.error("Failed to send message:", err);
+                }
+            }
+        };
+
+
+        // Автопрокрутка при загрузке
+        window.onload = scrollToBottom;
+
+
+        // Lazy loading
+        let isLoading = false;
+        let offset = 100
+        // Ленивая загрузка с проверкой
+        chatLog.addEventListener('scroll', async function () {
+            if (chatLog.scrollTop === 0 && !isLoading) {
+                isLoading = true;
+                const moreMessages = await loadOldMessages(offset);
+                if (moreMessages.length > 0) {
+                    offset += moreMessages.length;
+                    const previousHeight = chatLog.scrollHeight;
+                    moreMessages.reverse().forEach(msg => {
+                        chatLog.insertBefore(createMessageElement(msg), chatLog.firstChild);
+                    });
+                    chatLog.scrollTop = chatLog.scrollHeight - previousHeight;
+                } else {
+                    console.log("No more messages to load");
+                }
+                isLoading = false;
+            }
+        });
+
+        // Функция загрзки старых сообщений
+        async function loadOldMessages(offset) {
+            try {
+                const res = await fetch(`/chat/${roomID}/load-messages/?offset=${offset}&limit=50`);
+                return await res.json();
+            } catch (err) {
+                console.error("Failed to load messages:", err);
+                return [];
+            }
+        }
+
+    </script>
+{% endblock scripts %}
+

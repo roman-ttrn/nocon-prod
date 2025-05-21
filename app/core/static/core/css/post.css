@@ -1,0 +1,182 @@
+:root {
+  --red: #e63946;
+  --gray: #444;
+  --white: #fff;
+  --black: #0f0f0f;
+  --bg-gradient: linear-gradient(135deg, #303030, #a87d7d);
+}
+
+/* Общий фон и шрифт */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-gradient);
+  color: var(--white);
+  min-height: 100vh;
+}
+
+/* Основной контейнер */
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px;
+  gap: 40px;
+}
+
+/* Левая колонка */
+.left-column {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Правая колонка */
+.right-column {
+  width: 35%;
+  background: linear-gradient(135deg, #2b2a2a, #381f1f);
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Карточка поста */
+.post-card {
+  position: relative;
+  padding: 20px;
+  background: linear-gradient(135deg, #3b3b3b, #292929);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-card:hover {
+  transform: scale(1.015);
+}
+
+.post-image {
+  width: 70%;
+  border-radius: 12px;
+  margin-top: 15px;
+}
+
+/* Подвал поста */
+.post-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  font-size: 0.9em;
+  color: #bbb;
+}
+
+.like-button {
+  margin-top: 10px;
+  background: none;
+  border: none;
+  color: #ff5a5f;
+  cursor: pointer;
+  font-size: 1em;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.like-button:hover {
+  color: #ff8a8f;
+  transform: scale(1.1);
+}
+
+/* Удаление */
+.delete-form {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  color: #d66;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.delete-button:hover {
+  color: #f88;
+}
+
+/* Форма создания поста */
+.create-post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.submit-button {
+  background: linear-gradient(135deg, #d00000, #ff4d4d);
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s;
+  font-weight: bold;
+}
+
+.submit-button:hover {
+  background: linear-gradient(135deg, #ff1a1a, #ff6666);
+  transform: scale(1.03);
+}
+
+/* Инпут и текстовое поле */
+.post-form {
+  background: linear-gradient(145deg, #202020, #2a2a2a);
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(255, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.post-textarea {
+  width: 100%;
+  padding: 15px;
+  border-radius: 15px;
+  border: 1px solid var(--gray);
+  background-color: #1e1e1e;
+  color: var(--white);
+  font-size: 1rem;
+  resize: none;
+  transition: border-color 0.3s ease;
+}
+
+.post-textarea:focus {
+  outline: none;
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(237, 0, 12, 0.2);
+}
+
+/* Файл */
+.post-file-input {
+  color: var(--white);
+  background-color: transparent;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.post-file-input::-webkit-file-upload-button {
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.post-file-input::-webkit-file-upload-button:hover {
+  background: #ff3333;
+}

@@ -1,0 +1,78 @@
+{% load static %}
+
+<nav class="navbar">
+<div class="nav-left">
+
+    <img src="{% static "core/images/logo.png" %}" alt="NoCon" class="nav-logo">
+
+    <form id="search-form" class="nav-search">
+        <input type="text" id="search-input" name="q" placeholder="Поиск постов...">
+        <div id="suggestions-box"></div>
+    </form>
+    
+    
+</div>
+
+<div class="nav-right">
+    <a href="lists/plans/" class="nav-btn"><span>Планы</span></a>
+    <a href="lists/characters/" class="nav-btn"><span>Персонажи</span></a>
+    <a href="/chat/chat_list" class="nav-btn"><span>Чаты</span></a>
+    <a href="/user/profile/" class="nav-btn"><span>Профиль</span></a>
+    <a href="/user/logout_user/" class="nav-btn logout"><span>Выход</span></a>
+</div>
+</nav>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const input = document.getElementById("search-input");
+        const suggestionsBox = document.getElementById("suggestions-box");
+        const searchForm = document.getElementById("search-form");
+
+        let debounceTimeout;
+
+        input.addEventListener("input", function () {
+            clearTimeout(debounceTimeout);
+
+            debounceTimeout = setTimeout(() => {
+                const query = input.value.trim();
+
+                if (query.length === 0) {
+                    suggestionsBox.replaceChildren();
+                    return;
+                }
+
+                fetch(`/search_suggestions/?q=${encodeURIComponent(query)}`)
+                    .then(response => response.ok ? response.json() : Promise.reject("Ошибка сети"))
+                    .then(data => {
+                        suggestionsBox.replaceChildren();
+
+                        data.results.forEach(post => {
+                            const item = document.createElement("div");
+                            item.classList.add("suggestion-item");
+                            item.textContent = post.content + '... by @' + post.author;
+                            item.addEventListener("click", () => {
+                                window.location.href = `certain_post/${post.id}/`;
+                            });
+                            suggestionsBox.appendChild(item);
+                        });
+                    })
+                    .catch(error => {
+                        console.error("Ошибка при получении подсказок:", error);
+                    });
+            }, 300); // 300 мс задержки
+        });
+
+        // Скрытие подсказок при клике вне поля
+        document.addEventListener("click", function (e) {
+            if (!searchForm.contains(e.target)) {
+                suggestionsBox.replaceChildren();
+            }
+        });
+    });
+
+    // Animation
+    document.querySelectorAll('.suggestion-item').forEach((item, index) => {
+    item.style.setProperty('--order', index);
+    });
+</script>
+ 

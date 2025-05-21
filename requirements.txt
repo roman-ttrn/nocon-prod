@@ -1,0 +1,8 @@
+django
+Pillow
+channels
+channels-redis
+django-ratelimit
+psycopg2-binary  # если используешь PostgreSQL
+daphne
+gunicorn

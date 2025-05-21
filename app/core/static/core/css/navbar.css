@@ -1,0 +1,224 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden; /* защита от горизонтального скролла */
+}
+
+/* Контейнер не должен быть шире окна */
+.navbar {
+  max-width: 100vw; /* ограничим максимум */
+  overflow-x: visible; /* и обрежем переполнение */
+  flex-wrap: wrap; /* если не влезает — переносим */
+}
+
+
+:root {
+  --black: #0e0e0e;
+  --white: #f5f5f5;
+  --red: #ed000c;
+  --gray: #999;
+  --gradient: linear-gradient(135deg, #1e1e1e, #3a0f0f);
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* Глобальные стили */
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+  color: var(--white);
+}
+
+/* Навбар с градиентом и неоморфизмом */
+.navbar {
+  width: 100%;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--gradient);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6), inset 0 -1px 0 var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Левая часть (логотип + прочее) */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-logo {
+  width: 52px;
+  height: auto;
+  filter: drop-shadow(0 0 4px rgba(255, 0, 0, 0.4));
+}
+
+/* Поиск */
+.nav-search input {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  background: var(--glass-bg);
+  color: var(--white);
+  font-size: 1rem;
+  backdrop-filter: blur(6px);
+  transition: 0.3s ease;
+  border: 1px solid var(--glass-border);
+}
+
+.nav-search input::placeholder {
+  color: var(--gray);
+}
+
+.nav-search input:focus {
+  outline: none;
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(237, 0, 12, 0.3);
+}
+
+/* Правая часть: кнопки */
+.nav-right {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Кнопки */
+.nav-btn {
+  position: relative;
+  background: transparent;
+  color: var(--white);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.nav-btn::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0%;
+  background: var(--red);
+  transition: width 0.3s ease;
+  z-index: 0;
+}
+
+.nav-btn:hover::before {
+  width: 100%;
+}
+
+.nav-btn span {
+  position: relative;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+
+.nav-btn:hover span {
+  color: var(--white);
+}
+
+/* Кнопка выхода */
+.logout {
+  background-color: transparent;
+  color: var(--red);
+  border: 1px solid var(--red);
+}
+
+.logout::before {
+  background-color: var(--red);
+}
+
+.logout:hover span {
+  color: var(--white);
+}
+
+#search-form {
+    position: relative;
+    z-index: 1001; /* выше navbar */
+    width: 300px; /* или 100%, если тебе так нужно */
+}
+
+#suggestions-box {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    z-index: 1002;
+    border-radius: 10px;
+    overflow: hidden;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Каждая подсказка */
+.suggestion-item {
+    padding: 10px 15px;
+    background: linear-gradient(to right, #2e0000, #ff1a1a); /* красно-черный */
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+/* Наведение с эффектом */
+.suggestion-item:hover {
+    background: linear-gradient(to right, #ff1a1a, #2e0000);
+    transform: translateX(5px) scale(1.02);
+}
+
+/* Анимация появления */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+.suggestion-item {
+    /* Существующие стили */
+    margin: 4px 8px; /* Расстояние между элементами */
+    border-radius: 8px; /* Закругленные углы */
+    background: rgba(255, 26, 26, 0.3) !important; /* Мягкий красный */
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important; /* Плавная анимация */
+}
+
+.suggestion-item:first-child {
+    margin-top: 8px;
+}
+
+.suggestion-item:last-child {
+    margin-bottom: 8px;
+}
+
+.suggestion-item:hover {
+    /* Существующие стили */
+    transform: scale(1.03) translateX(5px) !important; /* Увеличение + смещение */
+    box-shadow: 0 4px 8px rgba(255, 26, 26, 0.3); /* Тень при наведении */
+    background: rgba(255, 26, 26, 0.5) !important; /* Ярче при наведении */
+}
+
+/* Плавное появление элементов */
+.suggestion-item {
+    opacity: 0;
+    animation: fadeIn 0.3s ease-out forwards;
+    animation-delay: calc(var(--order) * 0.05s);
+}

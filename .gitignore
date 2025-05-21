@@ -1,8 +1,25 @@
+# Python
 __pycache__/
-*.pyc
-*.env
-db.sqlite3
-.vscode/
+*.py[cod]
+*.sqlite3
+.env
 *.log
-.DS_Store
-/venv/
+*.pot
+*.pyc
+*.pyo
+*.pyd
+
+# Django
+*.sqlite3
+/media
+/static
+
+# Envs
+env/
+venv/
+
+# Docker
+*.pid
+.dockerignore
+Dockerfile
+entrypoint.sh

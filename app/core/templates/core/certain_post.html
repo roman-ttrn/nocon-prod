@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Пост {{ post.author.username }}</title>
+    <link rel="stylesheet" href="{% static 'core/css/certain_post.css' %}">
+</head>
+<body>
+    <a href="{% url 'home' %}" class="home-button">На главную</a>
+    <div class="container">
+        <div class="card">
+            <img src="{{ post.author.profile.get_avatar_url }}" class="avatar" alt="Аватар">
+
+            <h2 class="username">@{{ post.author.username }} {{ post.created_at|date:"d E H:i" }} </h2>
+
+            {% if post.content %}
+                <p class="content">{{ post.content }}</p>
+            {% endif %}
+
+            {% if post.image %}
+                <img src="{{ post.image.url }}" class="post-image" alt="Изображение поста">
+            {% endif %}
+
+        </div>
+    </div>
+</body>
+</html>

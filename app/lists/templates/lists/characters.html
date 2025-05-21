@@ -1,0 +1,53 @@
+{% extends "lists/base.html" %}
+{% load static %}
+{% load class_filters %}
+
+{% block content %}
+    <body class="bg">
+        <div class="container">
+            <div class="button-row">
+            <a href="{% url 'main' %}" class="btn neon-btn">На главную</a>
+            <a href="{% url 'character_create' %}" class="btn add-btn">+</a>
+        </div>
+
+            <h1 class="page-title">Персонажи</h1>
+
+            {% if characters %}
+                <div class="card-grid">
+                    {% for character in characters %}
+                        <div class="character-card">
+                            <div class="character-header">
+                                <div class="character-rate-fifa">
+                                    {{ character.general_rate }}
+                                </div>
+
+                                {% if character.image %}
+                                    <img src="{{ character.image.url }}" alt="{{ character.name }}">
+                                {% else %}
+                                    <img src="{% static 'lists/images/character_default.jpg' %}" alt="Default">
+                                {% endif %}
+                                <div class="character-rarity {{ character.rarity|css_class }}">
+                                    {{ character.rarity }}
+                                </div>
+                            </div>
+                            <div class="character-info">
+                                <h2>{{ character.name }}</h2>
+                                <p class="description">{{ character.description }}</p>
+                                <div class="stats">
+                                    <div><strong>Опасность:</strong> {{ character.danger }}/100</div>
+                                    <div><strong>Сила:</strong> {{ character.power }}/100</div>
+                                    <div><strong>Здоровье:</strong> {{ character.health }}/100</div>
+                                    <div><strong>Скорость:</strong> {{ character.speed }}/100</div>
+                                    <div><strong>Интеллект:</strong> {{ character.intelligence }}/100</div>
+                                    <div><strong>Удача:</strong> {{ character.luck }}/100</div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p style="color: white; text-align: center;">Нет доступных персонажей.</p>
+            {% endif %}
+        </div>
+    </body>
+{% endblock content %}

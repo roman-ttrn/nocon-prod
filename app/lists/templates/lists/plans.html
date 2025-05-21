@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "lists/css/plans.css" %}">
+    <title>Base</title>
+</head>
+<body>
+    <div class="plans-container">
+        <div class="plans-header">
+            <h1 class="plans-title">📅 Планы</h1>
+            <div class="plans-buttons">
+                <a href="/" class="nav-button">← На главную</a>
+                <a href="{% url 'plan_create' %}" class="add-button">+</a>
+            </div>
+        </div>
+
+        {% if plans %}
+            <ul class="plans-list">
+                {% for plan in plans %}
+                    <li class="plan-item">
+                        {% if plan.image %}
+                            <img src="{{ plan.image.url }}" alt="{{ plan.name }}" class="plan-image">
+                        {% endif %}
+                        <div class="plan-content">
+                            <h2 class="plan-name">{{ plan.name }}</h2>
+                            <p class="plan-description">{{ plan.description }}</p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-plans-text">Пока что планов нет. Добавь первый</p>
+        {% endif %}
+    </div>
+</body>
+</html>

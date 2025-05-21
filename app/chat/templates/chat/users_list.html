@@ -1,0 +1,33 @@
+{% extends "chat/base.html" %}
+{% load static %}
+
+{% block content %}
+    <body>
+        <a href="{% url 'chat_list' %}" class="back-button">← К чатам</a>
+        <div class="user-list-container">
+            {% for profile in profiles %}
+            <div class="user-card">
+                <div class="user-left">
+                    <img src="{{ profile.profile.get_avatar_url }}" alt="avatar" class="avatar">
+                    <div class="user-info">
+                        <div class="fullname">{{ profile.first_name }} {{ profile.last_name }}</div>
+                        <div class="username">@{{ profile.username }}</div>
+                        <div class="points">Очки: {{ profile.profile.contributor_points }}</div>
+                        <div class="status">{{ profile.profile.status }}</div>
+                    </div>
+                </div>
+                <div class="user-right">
+                    <div class="plus">
+                        <form action="{% url 'add_chat' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="user_id" value="{{ profile.id }}">
+                            <button type="submit" class="add-button">+</button>
+                        </form>
+                    </div>
+                    <div class="chat-label">чат</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </body>
+{% endblock content %}

@@ -1,0 +1,26 @@
+{% extends "chat/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="chat-list-container">
+    <h1 class="chat-list-title">Мои чаты</h1>
+
+    {% if chats %}
+        <ul class="chat-list">
+            {% for chat in chats %}
+                <li class="chat-item">
+                    <a href="{% url 'chat' chat.id %}" class="chat-link">
+                        <img src="{% static 'chat/images/chat_default.jpg' %}" alt="chat" class="chat-icon">
+                        <span class="chat-name">{{ chat.name }}</span>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="no-chats-text">У вас нет чатов.</p>
+    {% endif %}
+    </div>
+    
+    <a href="/chat/users_list" class="add-chat-button">+</a>
+    <a href="/" class="home-link">← На главную</a>
+{% endblock %}
