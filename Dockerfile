@@ -58,7 +58,7 @@ RUN apt-get update && apt-get install -y \
     # Pillow runtime (JPEG)
     zlib1g \               
     # Pillow runtime (ZIP)
-    libwebp6 \             
+    libwebp7 \             
     # Pillow runtime (WebP)
     && rm -rf /var/lib/apt/lists/*
 
