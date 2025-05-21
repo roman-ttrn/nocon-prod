@@ -61,6 +61,7 @@ RUN apt-get update && apt-get install -y \
     libwebp7 \             
     # Pillow runtime (WebP)
     netcat-openbsd \
+    # Health checker
     && rm -rf /var/lib/apt/lists/*
 
 # Назначаем рабочую директорию
