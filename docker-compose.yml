@@ -46,7 +46,8 @@ services:
       - media_volume:/app/media
       - static_volume:/app/staticfiles
     depends_on:
-      - web
+      web:
+        condition: service_healthy
 
 volumes:
   postgres_data: # Данные сохраняются на хост-машине (вашем компьютере или сервере) в специальном месте, управляемом Docker.
