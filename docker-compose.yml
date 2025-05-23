@@ -20,7 +20,7 @@ services:
       dockerfile: Dockerfile
     command: sh entrypoint.sh
     volumes:
-      - .:/app
+      - ./app:/app
       - media_volume:/app/media
       - static_volume:/app/staticfiles 
     env_file:
