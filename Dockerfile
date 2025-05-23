@@ -35,10 +35,10 @@ RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
 # Копируем весь проект (на этом этапе ты можешь добавить .dockerignore, чтобы не тащить лишние файлы)
-COPY . .
+COPY ./app .
 
 # Делаем entrypoint.sh исполняемым, без /app/, так как WORKDIR уже /app
-RUN chmod +x entrypoint.sh  
+RUN chmod +x app/entrypoint.sh  
 
 #############################
 # ЭТАП 2: Финальный контейнер
