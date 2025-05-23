@@ -18,7 +18,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: sh entrypoint.sh
+    command: sh /app/entrypoint.sh
     volumes:
       - ./app:/app
       - media_volume:/app/media
