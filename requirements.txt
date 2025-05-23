@@ -6,3 +6,4 @@ django-ratelimit
 psycopg2-binary  # если используешь PostgreSQL
 daphne
 gunicorn
+whitenoise
