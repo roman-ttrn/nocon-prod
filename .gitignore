@@ -20,6 +20,3 @@ venv/
 
 # Docker
 *.pid
-.dockerignore
-Dockerfile
-entrypoint.sh

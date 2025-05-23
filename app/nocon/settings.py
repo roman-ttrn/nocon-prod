@@ -21,8 +21,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_o%igoz&5)fq6tjr+ocg+t6r64u)iy1oq(%(r&q=_5_vhh9o*y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
@@ -155,6 +153,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'tatarinroman234@gmail.com'  # Ваш Gmail-адрес
-EMAIL_HOST_PASSWORD = 'wnhg lkrk bvaf ndst'  # Пароль или App Password
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")  
 DEFAULT_FROM_EMAIL = 'nocon@gmail.com'  # Отображаемый email отправителя
